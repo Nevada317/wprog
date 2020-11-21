@@ -1,0 +1,55 @@
+Address can be divided as follows:
+Extended address
+Page address
+Offset (relative to page)
+LSB bit (high/low byte of word)
+
+All those parts of address have fixed bit length, that should be described in configuration file.
+
+
+Target description is as follows:
+* name
+* flash size
+* page size
+* use extended address
+* eeprom size
+* eeprom page size
+* use eeprom page access
+
+
+Endpoint:
+<header>
+* task number (uint8_t). Non-zero!
+* Flags:
+*   0 - read
+*   1 - write
+*   2 - verify
+*   3 - perform chip erase
+*   4 - 
+*   5 - 
+*   6 - disable page write feature 
+*   7 - do not check signature
+* task status (enum)
+* address start (uint32_t). MSB differs - flash or EEPROM
+* payload size (uint16_t, up to 256)
+</header>
+* payload remaining to be transfered (uint16_t)
+* payload (256 bytes)
+
+task status can be:
+* Empty = 0
+(send header)
+* Filling (Buffer claimed. Waiting for write)
+(send multiple packets to fill buffer)
+* Queued (Data received or not needed)
+(programmer waits for completion of another task)
+* Writing
+(programmer sends data to mcu)
+* Waiting (after write)
+(programmer waits and polls mcu)
+* Reading
+(programmer reads data from mcu to verify/read)
+* Buffer ready (waiting for read)
+(master sends multiple read commands and then ACKs)
+* Finished (with result code)
+(master reads response code and then ACKs)
