@@ -911,7 +911,7 @@ FBUFF
 Text Label 4300 5150 0    50   ~ 0
 LED1
 Text Label 4300 6650 0    50   ~ 0
-LED3
+LED3_~RD
 $Comp
 L Device:Crystal_GND2 Y?
 U 1 1 5FDF094F
@@ -1787,12 +1787,8 @@ Text Label 1950 9650 3    50   ~ 0
 LED2
 Text Label 4300 5250 0    50   ~ 0
 LED2
-Text Label 2050 9650 3    50   ~ 0
-LED3
 Text Label 4300 6750 0    50   ~ 0
-LED4
-Text Label 2150 9650 3    50   ~ 0
-LED4
+LED4_~WR
 $Comp
 L Device:LED D?
 U 1 1 5FF34E3C
@@ -1924,4 +1920,42 @@ Text Label 3600 9650 3    50   ~ 0
 MCU_BUFF
 Text Label 3500 9650 3    50   ~ 0
 FBUFF
+Text Label 4300 6450 0    50   ~ 0
+PAR_~RXF
+Text Label 4300 6550 0    50   ~ 0
+PAR_~TXE
+$Comp
+L power:+5V #PWR?
+U 1 1 5FD4B651
+P 4300 6850
+F 0 "#PWR?" H 4300 6700 50  0001 C CNN
+F 1 "+5V" V 4315 6979 50  0000 L CNN
+F 2 "" H 4300 6850 50  0001 C CNN
+F 3 "" H 4300 6850 50  0001 C CNN
+	1    4300 6850
+	0    1    1    0   
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 5FD4BEFE
+P 4300 5350
+F 0 "#PWR?" H 4300 5200 50  0001 C CNN
+F 1 "+5V" V 4315 5479 50  0000 L CNN
+F 2 "" H 4300 5350 50  0001 C CNN
+F 3 "" H 4300 5350 50  0001 C CNN
+	1    4300 5350
+	0    1    1    0   
+$EndComp
+Text Label 2050 9650 3    50   ~ 0
+LED3_~RD
+Text Label 2150 9650 3    50   ~ 0
+LED4_~WR
+Text Label 8150 8050 0    50   ~ 0
+LED3_~RD
+Text Label 8150 8150 0    50   ~ 0
+LED4_~WR
+Text Label 8150 7850 0    50   ~ 0
+PAR_~RXF
+Text Label 8150 7950 0    50   ~ 0
+PAR_~TXE
 $EndSCHEMATC
