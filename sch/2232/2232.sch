@@ -1021,13 +1021,13 @@ $EndComp
 $Comp
 L Device:R_Pack04 RN6
 U 1 1 5FDFDC7F
-P 13900 5250
-F 0 "RN6" V 13480 5250 50  0000 C CNN
-F 1 "CAT16-471J4" V 13573 5250 50  0000 C CNN
-F 2 "NevaDA:R_CAT-16-4" V 14175 5250 50  0001 C CNN
-F 3 "~" H 13900 5250 50  0001 C CNN
-	1    13900 5250
-	0    1    1    0   
+P 13900 5150
+F 0 "RN6" V 14229 5150 50  0000 C CNN
+F 1 "CAT16-471J4" V 14136 5150 50  0000 C CNN
+F 2 "NevaDA:R_CAT-16-4" V 14175 5150 50  0001 C CNN
+F 3 "~" H 13900 5150 50  0001 C CNN
+	1    13900 5150
+	0    1    -1   0   
 $EndComp
 Text Label 14550 5150 2    50   ~ 0
 RX1_3VR
@@ -1459,21 +1459,21 @@ F 3 "~" H 11050 3800 50  0001 C CNN
 	1    11050 3800
 	0    1    1    0   
 $EndComp
-Text Label 11250 3900 0    50   ~ 0
-IDC_MISO
 Text Label 11250 3800 0    50   ~ 0
-IDC_CLK
+IDC_MISO
 Text Label 11250 3700 0    50   ~ 0
-IDC_RST
+IDC_CLK
 Text Label 11250 3600 0    50   ~ 0
+IDC_RST
+Text Label 11250 3900 0    50   ~ 0
 IDC_MOSI
-Text Label 10850 3900 2    50   ~ 0
-ISP_MISO
 Text Label 10850 3800 2    50   ~ 0
-ISP_CLK
+ISP_MISO
 Text Label 10850 3700 2    50   ~ 0
-ISP_RST
+ISP_CLK
 Text Label 10850 3600 2    50   ~ 0
+ISP_RST
+Text Label 10850 3900 2    50   ~ 0
 ISP_MOSI
 Text Label 8250 4000 2    50   ~ 0
 ISP_MISO
@@ -1513,7 +1513,7 @@ Text Label 7500 7450 0    50   ~ 0
 MCU_ROUT
 Text Label 8250 4500 2    50   ~ 0
 MCU_ROUT
-Text Label 7500 7350 0    50   ~ 0
+Text Label 7500 8250 0    50   ~ 0
 MCU_BUFF
 Text Label 8250 4800 2    50   ~ 0
 MCU_BUFF
@@ -2189,4 +2189,6 @@ Wire Wire Line
 	6900 5400 6900 5700
 Text Label 2200 5250 2    50   ~ 0
 USBf_D+
+Text Label 7500 8150 0    50   ~ 0
+EN_UART
 $EndSCHEMATC
