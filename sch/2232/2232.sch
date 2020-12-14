@@ -367,7 +367,7 @@ F 3 "https://static6.arrow.com/aropdfconversion/a2a28c51cacc8766722ee8846edf7634
 	1    5300 9000
 	1    0    0    -1  
 $EndComp
-Text Label 4900 9200 3    50   ~ 0
+Text Label 5500 9200 3    50   ~ 0
 USB_reset
 $Comp
 L symbol:74LVC244D U4
@@ -646,7 +646,7 @@ Wire Wire Line
 	3600 3200 3650 3200
 Text Label 2500 6650 2    50   ~ 0
 EEDATA
-Text Label 5000 9200 3    50   ~ 0
+Text Label 5600 9200 3    50   ~ 0
 EEDATA
 $Comp
 L power:+5V #PWR0125
@@ -1483,9 +1483,9 @@ Text Label 9250 4100 0    50   ~ 0
 ISP_RST
 Text Label 9250 3800 0    50   ~ 0
 ISP_MOSI
-Text Label 5100 9200 3    50   ~ 0
+Text Label 4900 9200 3    50   ~ 0
 ISP_MISO
-Text Label 5200 9200 3    50   ~ 0
+Text Label 5000 9200 3    50   ~ 0
 ISP_RST
 Text Label 5300 9200 3    50   ~ 0
 FCS
@@ -1519,12 +1519,12 @@ Text Label 8250 4800 2    50   ~ 0
 MCU_BUFF
 Text Label 5400 9200 3    50   ~ 0
 FBUFF
-Text Label 5500 9200 3    50   ~ 0
+Text Label 5100 9200 3    50   ~ 0
 MCU_BUFF
 Text Label 6300 6150 2    50   ~ 0
 MCU_RST
 NoConn ~ 6300 6350
-Text Label 5600 9200 3    50   ~ 0
+Text Label 5200 9200 3    50   ~ 0
 MCU_RST
 Text Label 5400 10400 2    50   ~ 0
 MCU_RST
