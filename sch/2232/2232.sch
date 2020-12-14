@@ -808,17 +808,17 @@ F 3 "" H 10250 1650 50  0001 C CNN
 	1    10250 1650
 	1    0    0    -1  
 $EndComp
-Text Label 10350 2050 3    50   ~ 0
+Text Label 10550 2050 3    50   ~ 0
 TX2_RS_3
-Text Label 10250 2050 3    50   ~ 0
+Text Label 10450 2050 3    50   ~ 0
 TX1_RS_3
 Text Label 10750 2050 3    50   ~ 0
 TX1_3V
-Text Label 10650 2050 3    50   ~ 0
+Text Label 10850 2050 3    50   ~ 0
 TX2_3V
-Text Label 10550 2050 3    50   ~ 0
+Text Label 10350 2050 3    50   ~ 0
 RX1_3V
-Text Label 10450 2050 3    50   ~ 0
+Text Label 10250 2050 3    50   ~ 0
 RX2_3V
 Text Label 4300 4250 0    50   ~ 0
 FDI
@@ -846,12 +846,12 @@ $EndComp
 $Comp
 L power:+3.3V #PWR0130
 U 1 1 5FDED2D5
-P 8750 3500
-F 0 "#PWR0130" H 8750 3350 50  0001 C CNN
-F 1 "+3.3V" H 8765 3675 50  0000 C CNN
-F 2 "" H 8750 3500 50  0001 C CNN
-F 3 "" H 8750 3500 50  0001 C CNN
-	1    8750 3500
+P 8750 3250
+F 0 "#PWR0130" H 8750 3100 50  0001 C CNN
+F 1 "+3.3V" H 8765 3425 50  0000 C CNN
+F 2 "" H 8750 3250 50  0001 C CNN
+F 3 "" H 8750 3250 50  0001 C CNN
+	1    8750 3250
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -2191,4 +2191,33 @@ Text Label 2200 5250 2    50   ~ 0
 USBf_D+
 Text Label 7500 8150 0    50   ~ 0
 EN_UART
+$Comp
+L Device:C C21
+U 1 1 600B3D78
+P 8350 3400
+F 0 "C21" V 8095 3400 50  0000 C CNN
+F 1 "0.22u" V 8188 3400 50  0000 C CNN
+F 2 "NevaDA:C_0603" H 8388 3250 50  0001 C CNN
+F 3 "~" H 8350 3400 50  0001 C CNN
+	1    8350 3400
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GNDD #PWR0164
+U 1 1 600B3D90
+P 8200 3400
+F 0 "#PWR0164" H 8200 3150 50  0001 C CNN
+F 1 "GNDD" V 8204 3290 50  0001 R CNN
+F 2 "" H 8200 3400 50  0001 C CNN
+F 3 "" H 8200 3400 50  0001 C CNN
+	1    8200 3400
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	8500 3400 8750 3400
+Wire Wire Line
+	8750 3250 8750 3400
+Connection ~ 8750 3400
+Wire Wire Line
+	8750 3400 8750 3500
 $EndSCHEMATC
