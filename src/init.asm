@@ -10,3 +10,12 @@ ldi XH, high(RAMSTART)
 	st X+, NULL
 	cpi XH, high(RAMEND+1)
 brlo (PC-2)
+
+ldc TEMP, PORTA, 0xFF
+ldc TEMP, PORTB, 0x7F
+ldc TEMP, PORTC, 0xFF
+ldc TEMP, PORTD, 0xCC
+ldc TEMP, DDRA,  0x00
+ldc TEMP, DDRB,  0xB0
+ldc TEMP, DDRC,  0x0C
+ldc TEMP, DDRD,  0xC0
