@@ -19,3 +19,7 @@ ldc TEMP, DDRA,  0x00
 ldc TEMP, DDRB,  0xB0
 ldc TEMP, DDRC,  0x0C
 ldc TEMP, DDRD,  0xC0
+
+call Mode_Init
+
+sei

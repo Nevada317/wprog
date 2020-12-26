@@ -17,8 +17,7 @@
 	reti
 	nop
 .org addr_INT2
-	reti
-	nop
+	jmp Mode_ISR_FBUFF
 .org addr_PCINT0
 	reti
 	nop
@@ -114,4 +113,5 @@ Loop:
 	.include "loop.asm"
 rjmp Loop
 
+.include "mode.asm"
 
