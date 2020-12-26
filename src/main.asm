@@ -105,6 +105,7 @@
 ; ####################################
 
 RESET:
+	.include "macro.asm"
 	.include "init.asm"
 
 Loop:
