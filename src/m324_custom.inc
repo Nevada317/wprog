@@ -132,3 +132,13 @@
 .equ addr_USART1_UDRE   = 0x003A ; USART1_UDRE     USART1 Data Register Empty
 .equ addr_USART1_TX     = 0x003C ; USART1_TX       USART1 Tx Complete
 .equ addr_ISR_END       = 0x003E
+
+.equ RAMSTART           = 0x0100
+.equ RAMEND             = 0x08FF
+
+.def XL = R26
+.def XH = R27
+.def YL = R28
+.def YH = R29
+.def ZL = R30
+.def ZH = R31

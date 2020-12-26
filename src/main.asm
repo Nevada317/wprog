@@ -1,4 +1,6 @@
 .include "m324_custom.inc"
+.include "registers.asm"
+.include "ram.asm"
 
 .cseg
 .org addr_RESET
