@@ -131,3 +131,4 @@
 .equ addr_USART1_RX     = 0x0038 ; USART1_RX       USART1 Rx Complete
 .equ addr_USART1_UDRE   = 0x003A ; USART1_UDRE     USART1 Data Register Empty
 .equ addr_USART1_TX     = 0x003C ; USART1_TX       USART1 Tx Complete
+.equ addr_ISR_END       = 0x003E
