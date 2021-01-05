@@ -21,5 +21,6 @@ ldc TEMP, DDRC,  0x0C
 ldc TEMP, DDRD,  0xC0
 
 call Mode_Init
+call UART_Init
 
 sei

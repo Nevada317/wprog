@@ -58,7 +58,7 @@ Mode_ISR_FBUFF:
 reti
 
 Mode_Init:
-	; Any edge shoult trigger interrupt
+	; Any edge should trigger interrupt
 	lds TEMP, EICRA
 	cbr TEMP, (1<<5); ISC21
 	sbr TEMP, (1<<4); ISC20

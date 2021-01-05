@@ -67,8 +67,7 @@
 	reti
 	nop
 .org addr_USART0_RX
-	reti
-	nop
+	jmp UART_RXC_ISR
 .org addr_USART0_UDRE
 	reti
 	nop
@@ -114,4 +113,5 @@ Loop:
 rjmp Loop
 
 .include "mode.asm"
+.include "uart.asm"
 
