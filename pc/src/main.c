@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stddef.h>
 #include "task.h"
+#include "pages.h"
 
 int main(int argc, char *argv[]) {
 	printf("Program started\n");
