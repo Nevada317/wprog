@@ -1,6 +1,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#define PAGES_CHIPERASE (1<<7)
+
 typedef struct {
 	uint8_t index;
 	bool Started;
@@ -12,5 +14,8 @@ typedef struct {
 } page_t;
 
 page_t* Page_Create(uint16_t PayloadSize);
+page_t* Page_Create_SignatureRead();
+page_t* Page_Create_ChipErase();
+
 page_t* Page_GetRoot();
 void Page_DestroyAll();

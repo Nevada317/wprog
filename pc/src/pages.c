@@ -14,6 +14,18 @@ static uint8_t Page_GetNextIndex() {
 	return curIndex;
 }
 
+page_t* Page_Create_SignatureRead() {
+	page_t* ptr = Page_Create(0);
+// 	ptr->OperationFlags = 0;
+	return ptr;
+}
+
+page_t* Page_Create_ChipErase() {
+	page_t* ptr = Page_Create(0);
+	ptr->OperationFlags = PAGES_CHIPERASE;
+	return ptr;
+}
+
 page_t* Page_Create(uint16_t PayloadSize) {
 	page_t* ptr;
 	if (Pages_Root == NULL) {

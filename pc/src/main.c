@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
 	printf("Parsing input parameters...\n");
 	// https://www.geeksforgeeks.org/getopt-function-in-c-to-parse-command-line-arguments/
 	int opt;
-	while((opt = getopt(argc, argv, ":p:f:e:F:E:")) != -1) {
+	while((opt = getopt(argc, argv, ":p:f:e:F:E:sc")) != -1) {
 		switch (opt) {
 			case 'p':
 				if (strPort) {
@@ -26,6 +26,12 @@ int main(int argc, char *argv[]) {
 				strPort = malloc(strlen(optarg)+1);
 				strcpy(strPort, optarg);
 				printf("  Port is \"%s\"\n", strPort);
+				break;
+			case 's':
+				Page_Create_SignatureRead();
+				break;
+			case 'c':
+				Page_Create_ChipErase();
 				break;
 			case 'f':
 			case 'e':
@@ -58,6 +64,7 @@ int main(int argc, char *argv[]) {
 		printf("  Task \"%s\"\n", task->Filename);
 		TASK_Destroy();
 	}
+	Page_DestroyAll();
 
 	printf("Program finishes\n");
 
