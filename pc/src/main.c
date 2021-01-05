@@ -5,6 +5,12 @@
 #include <stddef.h>
 #include "task.h"
 #include "pages.h"
+#include "ihex.h"
+
+void NewByte(uint8_t data, uint32_t address) {
+	printf("  D.0x%06x = 0x%02x\n", address, data);
+
+}
 
 int main(int argc, char *argv[]) {
 	printf("Program started\n");
@@ -60,6 +66,8 @@ int main(int argc, char *argv[]) {
 
 	while ((task = TASK_GetNext()) != NULL) {
 		printf("  Task \"%s\"\n", task->Filename);
+		ihex_read(task->Filename, &NewByte);
+
 		TASK_Destroy();
 	}
 
@@ -68,6 +76,8 @@ int main(int argc, char *argv[]) {
 		printf("  PAGE i%d\n", temp->index);
 		temp = (page_t*) temp->Next;
 	}
+
+
 
 	Page_DestroyAll();
 
