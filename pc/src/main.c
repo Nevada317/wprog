@@ -6,6 +6,7 @@
 #include "task.h"
 #include "pages.h"
 #include "ihex.h"
+#include "tty.h"
 
 static uint16_t PageSize = 16;
 
@@ -25,8 +26,10 @@ void NewByte(uint8_t data, uint32_t address) {
 int main(int argc, char *argv[]) {
 	printf("Program started\n");
 
+	bool Failed = false;
 	char* strPort = NULL;
 	bool Verify = true;
+	uint32_t Baud = 76800;
 
 	task_t* task;
 
@@ -74,15 +77,16 @@ int main(int argc, char *argv[]) {
 	}
 	printf("Parsing input parameters - done!\n\n");
 
-	while ((task = TASK_GetNext()) != NULL) {
+	while (((task = TASK_GetNext()) != NULL) && !Failed) {
 		printf("  Task \"%s\"\n", task->Filename);
-		ihex_read(task->Filename, &NewByte);
+		if (ihex_read(task->Filename, &NewByte))
+			Failed = true;
 
 		TASK_Destroy();
 	}
 
 	page_t* temp = Page_GetRoot();
-	while (temp != NULL) {
+	while ((temp != NULL) && !Failed) {
 		printf("  PAGE i%d\n", temp->index);
 		if (temp->DataFlag) {
 			printf("  Address: 0x%08x\n", temp->Address);
@@ -95,16 +99,27 @@ int main(int argc, char *argv[]) {
 		temp = (page_t*) temp->Next;
 	}
 
+	int port_handle = 0;
+	if (strPort && !Failed) {
+		port_handle = tty_open(strPort, Baud);
+		if (port_handle <= 0)
+			Failed = true;
+	}
 
 
 	Page_DestroyAll();
 
-	printf("Program finishes\n");
+	printf("Program finishes. Failed = %s\n", Failed ? "true" : "false");
 
+	if (port_handle) {
+		tty_close(port_handle);
+		port_handle = 0;
+	}
 	if (strPort) {
 		free(strPort);
 		strPort = NULL;
 	}
-
+	if (Failed)
+		return 1;
 	return 0;
 }
