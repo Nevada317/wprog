@@ -30,11 +30,17 @@ ret
 Mode_Set_HIO:
 	sbi PORTC, 2 ; Deselect UART
 	sbi PORTC, 3 ; Deselect MCU_BUFF
+	cbi DDRD, 0 ; Release PAR
+	cbi DDRD, 1
+	cbi DDRD, 2
+	cbi DDRD, 3
 ; 	sbi PORTD, 7
 ret
 
 Mode_Set_MPRG:
 	sbi PORTC, 2 ; Deselect UART
+	sbi DDRD, 1 ; Catch TXD
+
 ; 	sbi PORTD, 7
 ret
 

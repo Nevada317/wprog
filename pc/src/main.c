@@ -29,7 +29,6 @@ int main(int argc, char *argv[]) {
 	bool Failed = false;
 	char* strPort = NULL;
 	bool Verify = true;
-	uint32_t Baud = 76800;
 
 	task_t* task;
 
@@ -101,7 +100,7 @@ int main(int argc, char *argv[]) {
 
 	int port_handle = 0;
 	if (strPort && !Failed) {
-		port_handle = tty_open(strPort, Baud);
+		port_handle = tty_open(strPort);
 		if (port_handle <= 0)
 			Failed = true;
 	}
