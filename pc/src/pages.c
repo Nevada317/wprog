@@ -5,6 +5,7 @@
 
 
 static page_t* Pages_Root;
+static page_t* Pages_Current;
 
 static uint8_t Page_GetNextIndex() {
 	static uint8_t curIndex = 0;
@@ -43,6 +44,7 @@ page_t* Page_Create(uint16_t PayloadSize) {
 	ptr->Started = false;
 	ptr->OperationFlags = 0;
 	ptr->Address = 0;
+	ptr->DataFlag = false;
 	ptr->PayloadSize = PayloadSize;
 	if (ptr->PayloadSize > 0) {
 		if (ptr->PayloadSize > 256)
@@ -72,4 +74,33 @@ static void Page_DestroyFirst() {
 void Page_DestroyAll() {
 	while (Pages_Root)
 		Page_DestroyFirst();
+}
+
+static bool _Page_CoversAddress(page_t* page, uint32_t address, uint16_t pagesize) {
+	if (page == NULL)
+		return false;
+// 	if (!(page->DataFlag))
+// 		return false;
+	if (page->PayloadSize != pagesize)
+		return false;
+
+	if (page->Address > address)
+		return false;
+	if ((page->Address + page->PayloadSize) <= address)
+		return false;
+	return true;
+}
+
+page_t* Page_FindPageByAddress(uint32_t address, uint16_t pagesize) {
+	if (Pages_Current) {
+		if (_Page_CoversAddress(Pages_Current, address, pagesize))
+			return Pages_Current;
+	}
+	page_t* ptr = Pages_Root;
+
+	while (!_Page_CoversAddress(ptr, address, pagesize) && ptr)
+		ptr = (page_t*) ptr->Next;
+
+	Pages_Current = ptr;
+	return ptr;
 }

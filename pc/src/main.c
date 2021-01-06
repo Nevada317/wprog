@@ -7,9 +7,19 @@
 #include "pages.h"
 #include "ihex.h"
 
-void NewByte(uint8_t data, uint32_t address) {
-	printf("  D.0x%06x = 0x%02x\n", address, data);
+static uint16_t PageSize = 16;
 
+void NewByte(uint8_t data, uint32_t address) {
+// 	printf("  D.0x%06x = 0x%02x ", address, data);
+	page_t* ptr = Page_FindPageByAddress(address, PageSize);
+	if (ptr == NULL) {
+		ptr = Page_Create(PageSize);
+		ptr->DataFlag = true;
+		ptr->Address = address & ~(PageSize - 1);
+	}
+// 	printf(" %d\n", ptr->index);
+
+	*(ptr->Payload + (address & (ptr->PayloadSize - 1))) = data;
 }
 
 int main(int argc, char *argv[]) {
@@ -74,6 +84,14 @@ int main(int argc, char *argv[]) {
 	page_t* temp = Page_GetRoot();
 	while (temp != NULL) {
 		printf("  PAGE i%d\n", temp->index);
+		if (temp->DataFlag) {
+			printf("  Address: 0x%08x\n", temp->Address);
+			for (uint16_t i = 0; i < temp->PayloadSize; i++) {
+				printf(" %02X", *(temp->Payload+i));
+				if ((i & 15) == 15)
+					printf("\n");
+			}
+		}
 		temp = (page_t*) temp->Next;
 	}
 
