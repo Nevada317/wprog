@@ -6,7 +6,8 @@
 #include "task.h"
 #include "pages.h"
 #include "ihex.h"
-#include "tty.h"
+// #include "tty.h"
+#include "transport.h"
 
 static uint16_t PageSize = 16;
 
@@ -98,22 +99,15 @@ int main(int argc, char *argv[]) {
 		temp = (page_t*) temp->Next;
 	}
 
-	int port_handle = 0;
-	if (strPort && !Failed) {
-		port_handle = tty_open(strPort);
-		if (port_handle <= 0)
-			Failed = true;
-	}
+	if (!Failed && TRANSPORT_OpenPort(strPort))
+		Failed = true;
 
 
 	Page_DestroyAll();
 
 	printf("Program finishes. Failed = %s\n", Failed ? "true" : "false");
 
-	if (port_handle) {
-		tty_close(port_handle);
-		port_handle = 0;
-	}
+	TRANSPORT_Destroy();
 	if (strPort) {
 		free(strPort);
 		strPort = NULL;
