@@ -174,12 +174,12 @@ void Reader_Stop() {
 
 void Reader_NewByte(uint8_t byte) {
 	static bool escape = false;
-	printf("Read: %02X\n", byte);
+// 	printf("Read: %02X\n", byte);
 	if (byte == STX) {
 		RawRx_Counter = 0;
 		RawRx_Size = 4;
 		escape = false;
-		printf("> Start Detected\n");
+// 		printf("> Start Detected\n");
 	}
 
 	if ((RawRx_Counter >= 0) && (RawRx_Counter < RawRx_Size)) {
@@ -188,7 +188,7 @@ void Reader_NewByte(uint8_t byte) {
 			escape = true;
 		} else {
 			RawRx_Buffer[RawRx_Counter++] = byte | (escape ? 0x80 : 0);
-			printf("Stored: RawRx_Buffer[%d] = %02X\n", RawRx_Counter - 1, RawRx_Buffer[RawRx_Counter - 1]);
+// 			printf("Stored: RawRx_Buffer[%d] = %02X\n", RawRx_Counter - 1, RawRx_Buffer[RawRx_Counter - 1]);
 
 			escape = false;
 		}
@@ -196,7 +196,7 @@ void Reader_NewByte(uint8_t byte) {
 
 
 	if (RawRx_Counter >= RawRx_Size) {
-		printf("> Time to check CRC\n");
+// 		printf("> Time to check CRC\n");
 		// Check CRC
 		uint16_t CRC_calc = CRC_Calculate(RawRx_Buffer+1, RawRx_Size-3); // STX and CRC not included
 		uint16_t CRC_rx = 0;
@@ -214,19 +214,19 @@ void Reader_NewByte(uint8_t byte) {
 		if (RawRx_Size > 256)
 			RawRx_Size = 256;
 		RawRx_Size += 3; // Add STX and 2 bytes of CRC
-		printf("Read size: %d\n", RawRx_Size);
+// 		printf("Read size: %d\n", RawRx_Size);
 	}
 }
 
 void* Reader(void* arg) {
 	int rdlen;
 	uint8_t RxArray[1024];
-	printf("\nReader started\n");
+// 	printf("\nReader started\n");
 	while (!ReaderStopReq && (rdlen = tty_read(port_handle, RxArray, sizeof(RxArray))) >= 0) {
 		for (uint16_t i = 0; i < rdlen; i++) {
 			Reader_NewByte(RxArray[i]);
 		}
 	}
-	printf("\nReader terminates\n");
+// 	printf("\nReader terminates\n");
 	return NULL;
 }

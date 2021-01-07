@@ -65,20 +65,25 @@ int main(int argc, char *argv[]) {
 				task->Verify = Verify;
 				task->EEP = (opt == 'e');
 				strcpy(task->Filename = malloc(strlen(optarg)+1), optarg);
-				printf("  Task created: %c:\"%s\", Verify=%s\n", opt, task->Filename, Verify ? "true" : "false");
+// 				printf("  Task created: %c:\"%s\", Verify=%s\n", opt, task->Filename, Verify ? "true" : "false");
 				break;
 			case ':':
 				printf("  Option %c needs a value\n", opt);
+				Failed = true;
 				break;
 			case '?':
 				printf("  Unknown option: %c\n", optopt);
+				Failed = true;
 				break;
 		}
 	}
 	printf("Parsing input parameters - done!\n\n");
 
+	if (Failed)
+		return -1;
+
 	while (((task = TASK_GetNext()) != NULL) && !Failed) {
-		printf("  Task \"%s\"\n", task->Filename);
+		printf("  Processing file \"%s\"\n", task->Filename);
 		if (ihex_read(task->Filename, &NewByte))
 			Failed = true;
 
