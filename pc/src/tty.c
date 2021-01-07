@@ -20,21 +20,21 @@ int tty_open(const char *portname) {
 	if (set_interface_attribs(fd))
 		return -1;
 
-	uint8_t buf[30];
-	int rdlen;
-	buf[0] = 0x40;
-	write(fd, buf, 1);
-	for (uint8_t i = 0; i<255; i++) {
-		buf[0] = i;
-		write(fd, buf, 1);
-		rdlen = read(fd, buf, 5);
-		if (rdlen){
-			printf("(%02x)  Read %d bytes", i, rdlen);
-			for (uint8_t ch = 0; ch < rdlen; ch++)
-				printf(" %02x", buf[ch]);
-			printf("\n");
-		}
-	}
+// 	uint8_t buf[30];
+// 	int rdlen;
+// 	buf[0] = 0x40;
+// 	write(fd, buf, 1);
+// 	for (uint8_t i = 0; i<255; i++) {
+// 		buf[0] = i;
+// 		write(fd, buf, 1);
+// 		rdlen = read(fd, buf, 5);
+// 		if (rdlen){
+// 			printf("(%02x)  Read %d bytes", i, rdlen);
+// 			for (uint8_t ch = 0; ch < rdlen; ch++)
+// 				printf(" %02x", buf[ch]);
+// 			printf("\n");
+// 		}
+// 	}
 
 	return fd;
 }

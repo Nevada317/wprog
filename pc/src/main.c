@@ -116,6 +116,7 @@ int main(int argc, char *argv[]) {
 
 	printf("Program finishes. Failed = %s\n", Failed ? "true" : "false");
 
+	sleep(1);
 	TRANSPORT_Destroy();
 	if (strPort) {
 		free(strPort);

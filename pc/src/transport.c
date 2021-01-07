@@ -208,6 +208,7 @@ void Reader_NewByte(uint8_t byte) {
 		if (RawRx_Size > 256)
 			RawRx_Size = 256;
 		RawRx_Size += 3; // Add STX and 2 bytes of CRC
+		printf("Read size: %d\n", RawRx_Size);
 	}
 }
 
