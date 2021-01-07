@@ -21,6 +21,9 @@ void Reader_Start();
 void Reader_Stop();
 void* Reader(void* arg);
 void Reader_NewByte(uint8_t byte);
+static uint8_t RawRx_Buffer[260];
+static volatile uint16_t RawRx_Counter = -1;
+static uint16_t RawRx_Size = 0;
 
 
 int TRANSPORT_OpenPort(const char *portname) {
@@ -156,6 +159,7 @@ void Parcel_Destroy(transport_parcel* parcel) {
 
 void Reader_Start() {
 	ReaderStopReq = false;
+	RawRx_Counter = -1;
 	pthread_create(&ReaderThread, NULL, &Reader, NULL);
 }
 
@@ -168,7 +172,43 @@ void Reader_Stop() {
 }
 
 void Reader_NewByte(uint8_t byte) {
+	static bool escape = false;
 	printf("Read: %02X\n", byte);
+	if (byte == STX) {
+		RawRx_Counter = 0;
+		RawRx_Size = 4;
+		escape = false;
+		printf("> Start Detected\n");
+	}
+
+	if ((RawRx_Counter >= 0) && (RawRx_Counter < RawRx_Size)) {
+		// Remove stuffing
+		if (byte == ESC) {
+			escape = true;
+		} else {
+			RawRx_Buffer[RawRx_Counter++] = byte | (escape ? 0x80 : 0);
+			printf("Stored: RawRx_Buffer[%d] = %02X\n", RawRx_Counter - 1, RawRx_Buffer[RawRx_Counter - 1]);
+
+			escape = false;
+		}
+	}
+
+
+	if (RawRx_Counter >= RawRx_Size) {
+		printf("> Time to check CRC\n");
+		// Check CRC
+
+		RawRx_Counter = -1;
+	}
+	// If RawRx_Counter reaches 3, then we have parcel size in bytes 1 and 2.
+	// MSB is 2, LSB is 1. Both are 7-bit
+	if (RawRx_Counter == 3) {
+		RawRx_Size = (RawRx_Buffer[1] & 0x7F);
+		RawRx_Size |= ((RawRx_Buffer[2] & 0x7F) << 7);
+		if (RawRx_Size > 256)
+			RawRx_Size = 256;
+		RawRx_Size += 3; // Add STX and 2 bytes of CRC
+	}
 }
 
 void* Reader(void* arg) {
