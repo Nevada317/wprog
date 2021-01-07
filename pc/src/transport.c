@@ -3,6 +3,9 @@
 #include <stdlib.h>
 
 static int port_handle = 0;
+static void (*ParcelCallback)(transport_parcel*) = NULL;
+static void (*EndpointStatusCallback)(uint8_t, endpoint_status*) = NULL;
+
 
 int TRANSPORT_OpenPort(const char *portname) {
 	if (!portname)
@@ -29,13 +32,12 @@ void TRANSPORT_SendParcel(transport_parcel* parcel) {
 }
 
 void TRANSPORT_SubscribeParcels(void (*callback)(transport_parcel*)) {
-
+	ParcelCallback = callback;
 }
 
 void TRANSPORT_SubscribeEndpointStatus(void (*callback)(uint8_t, endpoint_status*)) {
-
+	EndpointStatusCallback = callback;
 }
-
 
 transport_parcel* Parcel_Create(uint8_t PayloadSize) {
 	transport_parcel* ptr = calloc(1, sizeof(transport_parcel*));
