@@ -140,3 +140,8 @@ int getttychar(int fd, int* owner, int color, char* Start) {
 	return 0;
 }*/
 
+int tty_write(int descriptor, uint8_t* data, uint16_t length) {
+	if (descriptor > 0)
+		return write(descriptor, data, length);
+	return 0;
+}

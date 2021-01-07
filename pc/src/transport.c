@@ -93,6 +93,9 @@ void TRANSPORT_SendParcel(transport_parcel* parcel) {
 			*(sptr++) = byte;
 		}
 	}
+
+	free(RawBuffer);
+
 	uint16_t StuffedLength = sptr - StuffedBuffer;
 
 	for (uint16_t i = 0; i < StuffedLength; i++) {
@@ -103,6 +106,9 @@ void TRANSPORT_SendParcel(transport_parcel* parcel) {
 	if (StuffedLength & 15)
 		printf("\n");
 
+	tty_write(port_handle, StuffedBuffer, StuffedLength);
+
+	free(StuffedBuffer);
 
 }
 
