@@ -1,5 +1,6 @@
 PRG=main
 
+CFLAGS+= -pthread
 CFLAGS+= -Wall
 CFLAGS+= -g
 CFLAGS+= -O1

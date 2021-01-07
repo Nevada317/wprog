@@ -3,3 +3,4 @@ int tty_open(const char *portname);
 int tty_close(int fd);
 
 int tty_write(int descriptor, uint8_t* data, uint16_t length);
+int tty_read(int descriptor, uint8_t* data, uint16_t length);

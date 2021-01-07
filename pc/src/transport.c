@@ -1,6 +1,7 @@
 #include "transport.h"
 #include "tty.h"
 #include <stdlib.h>
+#include <pthread.h>
 
 #include <stdio.h>
 
@@ -14,6 +15,13 @@ static int port_handle = 0;
 static void (*ParcelCallback)(transport_parcel*) = NULL;
 static void (*EndpointStatusCallback)(uint8_t, endpoint_status*) = NULL;
 
+volatile static bool ReaderStopReq = false;
+pthread_t ReaderThread = 0;
+void Reader_Start();
+void Reader_Stop();
+void* Reader(void* arg);
+void Reader_NewByte(uint8_t byte);
+
 
 int TRANSPORT_OpenPort(const char *portname) {
 	if (!portname)
@@ -22,12 +30,14 @@ int TRANSPORT_OpenPort(const char *portname) {
 	if (port_handle <= 0)
 		return -1;
 
-	// TODO: Here we should prepare our second thread
+	Reader_Start();
+
 	return 0;
 }
 
 void TRANSPORT_Destroy() {
-	// TODO: Here we should stop and join our second thread
+	Reader_Stop();
+
 	if (port_handle) {
 		tty_close(port_handle);
 		port_handle = 0;
@@ -140,4 +150,36 @@ void Parcel_Destroy(transport_parcel* parcel) {
 		}
 		free(parcel);
 	}
+}
+
+// READER - Works in separate thread
+
+void Reader_Start() {
+	ReaderStopReq = false;
+	pthread_create(&ReaderThread, NULL, &Reader, NULL);
+}
+
+void Reader_Stop() {
+	if (!ReaderThread)
+		return;
+	ReaderStopReq = true;
+	void * retval;
+	pthread_join(ReaderThread, &retval);
+}
+
+void Reader_NewByte(uint8_t byte) {
+	printf("Read: %02X\n", byte);
+}
+
+void* Reader(void* arg) {
+	int rdlen;
+	uint8_t RxArray[1024];
+	printf("\nReader started\n");
+	while (!ReaderStopReq && (rdlen = tty_read(port_handle, RxArray, sizeof(RxArray))) >= 0) {
+		for (uint16_t i = 0; i < rdlen; i++) {
+			Reader_NewByte(RxArray[i]);
+		}
+	}
+	printf("\nReader terminates\n");
+	return NULL;
 }

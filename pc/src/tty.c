@@ -145,3 +145,9 @@ int tty_write(int descriptor, uint8_t* data, uint16_t length) {
 		return write(descriptor, data, length);
 	return 0;
 }
+
+int tty_read(int descriptor, uint8_t* data, uint16_t length) {
+	if (descriptor > 0)
+		return read(descriptor, data, length);
+	return -1;
+}
