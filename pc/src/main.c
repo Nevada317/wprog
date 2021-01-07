@@ -102,6 +102,15 @@ int main(int argc, char *argv[]) {
 	if (!Failed && TRANSPORT_OpenPort(strPort))
 		Failed = true;
 
+	transport_parcel* parcel = Parcel_Create(4);
+	parcel->Instruction = 0x55;
+	parcel->PayloadContainer->Offset = 0x12345678L;
+	*(parcel->PayloadContainer->Payload + 0) = 0x11;
+	*(parcel->PayloadContainer->Payload + 1) = 0x12;
+	*(parcel->PayloadContainer->Payload + 2) = 0x13;
+	*(parcel->PayloadContainer->Payload + 3) = 0x14;
+	TRANSPORT_SendParcel(parcel);
+	Parcel_Destroy(parcel);
 
 	Page_DestroyAll();
 

@@ -9,7 +9,6 @@ typedef struct __attribute__ ((__packed__)) {
 } transport_payload;
 
 typedef struct __attribute__ ((__packed__)) {
-	uint8_t FullLength; // Will be calculated by sender
 	bool Bank2;
 	uint8_t Instruction;
 	transport_payload* PayloadContainer;
