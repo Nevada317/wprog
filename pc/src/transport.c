@@ -4,6 +4,11 @@
 
 #include <stdio.h>
 
+#define STX   0xF0
+#define ESC   0xF1
+#define ESTX  0x70
+#define EESC  0x71
+
 
 static int port_handle = 0;
 static void (*ParcelCallback)(transport_parcel*) = NULL;
@@ -64,13 +69,41 @@ void TRANSPORT_SendParcel(transport_parcel* parcel) {
 // 	*(ptr++) = CRC & 0xFF;
 // 	*(ptr++) = (CRC >> 8) & 0xFF;
 
-	for (uint16_t i = 0; i < DataLength; i++) {
+	for (uint16_t i = 0; i < (DataLength+2); i++) {
 		printf(" %02X", *(RawBuffer + i));
 		if ((i & 15) == 15)
 			printf("\n");
 	}
-	if (DataLength & 15)
+	if ((DataLength+2) & 15)
 		printf("\n");
+
+	uint8_t* StuffedBuffer = calloc(1, 1+2*DataLength+2);
+	uint8_t* sptr = StuffedBuffer;
+	ptr = RawBuffer;
+	*(sptr++) = STX;
+	for (uint16_t i = 0; i < (DataLength+2); i++) {
+		uint8_t byte = *(ptr++);
+		if (byte == STX) {
+			*(sptr++) = ESC;
+			*(sptr++) = ESTX;
+		} else if (byte == ESC) {
+			*(sptr++) = ESC;
+			*(sptr++) = EESC;
+		} else {
+			*(sptr++) = byte;
+		}
+	}
+	uint16_t StuffedLength = sptr - StuffedBuffer;
+
+	for (uint16_t i = 0; i < StuffedLength; i++) {
+		printf(" %02X", *(StuffedBuffer + i));
+		if ((i & 15) == 15)
+			printf("\n");
+	}
+	if (StuffedLength & 15)
+		printf("\n");
+
+
 }
 
 void TRANSPORT_SubscribeParcels(void (*callback)(transport_parcel*)) {
