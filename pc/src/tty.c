@@ -65,8 +65,8 @@ static int set_interface_attribs(int fd) {
 //     tty.c_cflag |= PARENB;    // parity enabled
 //     tty.c_cflag &= PARODD;    // NOT odd = even
 
-	tty.c_cflag &= ~CSTOPB;     // only need 1 stop bit
-// 	tty.c_cflag |= CSTOPB;     // 2 stop bit
+// 	tty.c_cflag &= ~CSTOPB;     // only need 1 stop bit
+	tty.c_cflag |= CSTOPB;     // 2 stop bit
 
 	tty.c_cflag &= ~CRTSCTS;   // no hardware flowcontrol
 // 	tty.c_cflag &= ~HUPCL; // Do not raise DTR

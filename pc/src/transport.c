@@ -1,5 +1,6 @@
 #include "transport.h"
 #include "tty.h"
+#include "crc.h"
 #include <stdlib.h>
 #include <pthread.h>
 
@@ -78,9 +79,9 @@ void TRANSPORT_SendParcel(transport_parcel* parcel) {
 	uint8_t DataLength = ptr - RawBuffer;
 	*(RawBuffer+0) = DataLength & 0x7F;
 	*(RawBuffer+1) = (DataLength>>7) & 0x7F;
-// 	uint16_t CRC = GetCrc(RawBuffer, DataLength);
-// 	*(ptr++) = CRC & 0xFF;
-// 	*(ptr++) = (CRC >> 8) & 0xFF;
+	uint16_t CRC = CRC_Calculate(RawBuffer, DataLength);
+	*(ptr++) = CRC & 0xFF;
+	*(ptr++) = (CRC >> 8) & 0xFF;
 
 	for (uint16_t i = 0; i < (DataLength+2); i++) {
 		printf(" %02X", *(RawBuffer + i));
@@ -197,6 +198,11 @@ void Reader_NewByte(uint8_t byte) {
 	if (RawRx_Counter >= RawRx_Size) {
 		printf("> Time to check CRC\n");
 		// Check CRC
+		uint16_t CRC_calc = CRC_Calculate(RawRx_Buffer+1, RawRx_Size-3); // STX and CRC not included
+		uint16_t CRC_rx = 0;
+		CRC_rx |= ((uint16_t)*(RawRx_Buffer + RawRx_Size - 2));
+		CRC_rx |= ((uint16_t)*(RawRx_Buffer + RawRx_Size - 1)) << 8;
+		printf("> CRC = %04X and %04X\n", CRC_calc, CRC_rx);
 
 		RawRx_Counter = -1;
 	}
