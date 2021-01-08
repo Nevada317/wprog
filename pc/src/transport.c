@@ -61,9 +61,6 @@ void TRANSPORT_SendParcel(transport_parcel* parcel) {
 	if (parcel->PayloadContainer) {
 		*(ptr++) = parcel->PayloadContainer->PayloadLength;
 		*(ptr++) = parcel->PayloadContainer->Offset & 0xFF;
-		*(ptr++) = (parcel->PayloadContainer->Offset >>  8) & 0xFF;
-		*(ptr++) = (parcel->PayloadContainer->Offset >> 16) & 0xFF;
-		*(ptr++) = (parcel->PayloadContainer->Offset >> 24) & 0xFF;
 		if (parcel->PayloadContainer->Payload) {
 			for (uint16_t i = 0; i < parcel->PayloadContainer->PayloadLength; i++) {
 				*(ptr++) = *(parcel->PayloadContainer->Payload + i);

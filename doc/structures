@@ -1,3 +1,63 @@
+(From pc to mcu)
+Start
+Length 2x7-bit
+Instruction (+bank)
+Payload length
+[ Offset u8 ]
+[ Payload ]
+CRC
+
+(From mcu to pc)
+Start
+Length 2x7-bit
+{Status 1}
+{Status 2}
+Instruction (+bank)
+Payload length
+[ Offset u8 ]
+[ Payload ]
+CRC
+
+Instructions:
+(bank-less)
+	Poll
+	Set device description (page size, signature etc.)
+	Set access parameters (speed etc.)
+(with bank)
+	Set bank header (with full bank header)
+	Add data to bank (with some data payload)
+	Request data from bank (w offset as payload)
+	Ack/clear bank
+
+In instruction, bit 7 selects bank. Instructions 00-0F have no bank
+
+Bank header contains:
+Operation
+	Enter programming
+	Chip erase
+	Read params (Signature, fuses)
+	Write flash
+	Write EEPROM
+	Write fuse/lock. Offset selects fuses
+	Exit programming
+	Reset
+Offset u32
+Flags
+	Use page access
+	Verify
+	Hard delay (disable polling)
+Payload size
+
+Status structure contains:
+Bank status (enum)
+Not received byte offset (data should be filled incrementally)
+
+
+
+
+
+// Older docs below
+
 Address can be divided as follows:
 Extended address
 Page address
@@ -25,9 +85,9 @@ Endpoint:
 *   1 - write
 *   2 - verify
 *   3 - perform chip erase
-*   4 - 
-*   5 - 
-*   6 - disable page write feature 
+*   4 -
+*   5 -
+*   6 - disable page write feature
 *   7 - do not check signature
 * task status (enum)
 * address start (uint32_t). MSB differs - flash or EEPROM

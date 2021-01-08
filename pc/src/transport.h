@@ -4,7 +4,7 @@
 
 typedef struct __attribute__ ((__packed__)) {
 	uint8_t PayloadLength;
-	uint32_t Offset;
+	uint8_t Offset;
 	uint8_t* Payload;
 } transport_payload;
 
