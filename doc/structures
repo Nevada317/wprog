@@ -38,9 +38,9 @@ Operation
 	Read params (Signature, fuses)
 	Write flash
 	Write EEPROM
-	Write fuse/lock. Offset selects fuses
+	Write fuse/lock
 	Exit programming
-	Reset
+	Reset target
 Offset u32
 Flags
 	Use page access
