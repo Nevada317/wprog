@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) {
 
 	transport_parcel* parcel = Parcel_Create(4);
 	parcel->Instruction = 0x55;
-	parcel->PayloadContainer->Offset = 0x12345678L;
+	parcel->PayloadContainer->Offset = 0;
 	*(parcel->PayloadContainer->Payload + 0) = 0x11;
 	*(parcel->PayloadContainer->Payload + 1) = 0x12;
 	*(parcel->PayloadContainer->Payload + 2) = 0x13;
