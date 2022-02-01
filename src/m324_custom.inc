@@ -142,3 +142,12 @@
 .def YH = R29
 .def ZL = R30
 .def ZH = R31
+
+; UCSRxA
+.equ RXC            = 7
+.equ TXC            = 6
+.equ UDRE           = 5
+.equ FE             = 4
+.equ DOR            = 3
+.equ UPE            = 2
+.equ U2X            = 1
