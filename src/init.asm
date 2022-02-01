@@ -1,4 +1,6 @@
 clr NULL
+clr ONE
+inc ONE
 
 ldc TEMP, SPL,  low(RAMEND)
 ldc TEMP, SPH, high(RAMEND)
