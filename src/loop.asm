@@ -2,10 +2,7 @@ wdr
 call MODULE_1WIRE_TRYTOSEND
 brtc Loop_UART_NoSend
 
-	rcall _MODULE_1W_SEND_R
-
-	bst DATA, 0
-	rcall _MODULE_1W_BIT_SEND
+	rcall MODULE_1WIRE_EXCHANGE
 
 	lds TEMP, UCSR0A
 		sbrs TEMP, UDRE

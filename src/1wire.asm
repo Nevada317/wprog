@@ -60,6 +60,33 @@ MODULE_1WIRE_TRYTOSEND:
 	set
 ret
 
+MODULE_1WIRE_EXCHANGE:
+	rcall _MODULE_1W_SEND_R
+	brts (PC+2)
+		ret
+
+	ldi ADDR, 8
+	ldi DATA, 0x33
+	_MODULE_1WIRE_EXCHANGE_loop1:
+		bst DATA, 0
+		lsr DATA
+		push DATA
+		push ADDR
+		rcall _MODULE_1W_BIT_SEND
+		pop ADDR
+		pop DATA
+		dec ADDR
+	brne _MODULE_1WIRE_EXCHANGE_loop1
+
+	ldi ADDR, 64
+	_MODULE_1WIRE_EXCHANGE_loop2:
+		push ADDR
+		rcall _MODULE_1W_BIT_READ
+		pop ADDR
+		dec ADDR
+	brne _MODULE_1WIRE_EXCHANGE_loop2
+
+ret
 
 ; ##########################################################
 
@@ -123,7 +150,7 @@ _MODULE_1W_BIT_READ:
 	rcall _MODULE_1W_RELEASE
 	rcall _MODULE_1W_DELAY_10us
 	rcall _MODULE_1W_SAMPLE
-	rcall _MODULE_1W_DELAY_30us
+	rcall _MODULE_1W_DELAY_80us
 ret
 
 
