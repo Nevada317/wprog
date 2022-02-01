@@ -8,3 +8,5 @@ Mode_State: .BYTE 1
 .equ Mode_State_UART = 0
 .equ Mode_State_HIO  = 1
 .equ Mode_State_MPRG = 2
+
+.include "1wire_ram.asm"

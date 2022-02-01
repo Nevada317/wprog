@@ -20,8 +20,13 @@ UART_RXC_ISR:
 ; 		ldc TMPI, Mode_State, Mode_State_MPRG
 		rcall Mode_Update
 
+
 	_UART_RXC_ISR_nostart:
-	sts UDR0, DATAI
+
+	rcall MODULE_1WIRE_INIT
+	rcall MODULE_1WIRE_RXC ; (DATAI)
+
+; 	sts UDR0, DATAI
 
 	out SREG, rSREG
 reti

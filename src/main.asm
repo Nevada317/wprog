@@ -115,3 +115,4 @@ rjmp Loop
 .include "mode.asm"
 .include "uart.asm"
 
+.include "1wire.asm"
