@@ -1,18 +1,19 @@
 Mode_Update:
 	push TEMP
 
-	lds TEMP, Mode_State
-		cpi TEMP, Mode_State_UART
-			brne (PC+2)
-				rcall Mode_Set_UART
-	lds TEMP, Mode_State
-		cpi TEMP, Mode_State_HIO
-			brne (PC+2)
-				rcall Mode_Set_HIO
-	lds TEMP, Mode_State
-		cpi TEMP, Mode_State_MPRG
-			brne (PC+2)
-				rcall Mode_Set_MPRG
+; 	lds TEMP, Mode_State
+; 		cpi TEMP, Mode_State_UART
+; 			brne (PC+2)
+; 				rcall Mode_Set_UART
+; 	lds TEMP, Mode_State
+; 		cpi TEMP, Mode_State_HIO
+; 			brne (PC+2)
+; 				rcall Mode_Set_HIO
+; 	lds TEMP, Mode_State
+; 		cpi TEMP, Mode_State_MPRG
+; 			brne (PC+2)
+; 				rcall Mode_Set_MPRG
+	rcall MODULE_1WIRE_INIT
 
 	pop TEMP
 ret
@@ -65,13 +66,15 @@ reti
 
 Mode_Init:
 	; Any edge should trigger interrupt
-	lds TEMP, EICRA
-	cbr TEMP, (1<<5); ISC21
-	sbr TEMP, (1<<4); ISC20
-	sts EICRA, TEMP
+; 	lds TEMP, EICRA
+; 	cbr TEMP, (1<<5); ISC21
+; 	sbr TEMP, (1<<4); ISC20
+; 	sts EICRA, TEMP
+;
+; 	; Enable interrupt
+; 	sbi EIMSK, 2 ; INT2
+;
+; 	rcall Mode_Update
 
-	; Enable interrupt
-	sbi EIMSK, 2 ; INT2
-
-	rcall Mode_Update
+	rcall MODULE_1WIRE_INIT
 ret

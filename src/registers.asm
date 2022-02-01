@@ -5,3 +5,4 @@
 .def TMPI = R17
 .def DATA = R18
 .def DATAI = R19
+.def ADDR = R20

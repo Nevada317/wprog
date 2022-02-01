@@ -9,7 +9,7 @@ fuse:
 	${AVRDUDE} -B 1200 -e -U efuse:w:0xfc:m -U hfuse:w:0xc9:m -U lfuse:w:0xd7:m
 
 build/main.hex: build/main.asm *.asm *.inc Makefile | build/.
-	cd build; avra -o ../$@ -I ../ main.asm
+	cd build; avra -D F_OSC=${F_OSC} -o ../$@ -I ../ main.asm
 # 	cd build; avra -fI -D F_OSC=${F_OSC} -I ../ -o $@ main.asm
 
 
