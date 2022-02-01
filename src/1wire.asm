@@ -92,9 +92,10 @@ _MODULE_1W_SEND_R:
 	ldi ADDR, 200 ; x3 us
 	_MODULE_1W_SEND_R_loop:
 		rcall _MODULE_1W_DELAY_3us
+		rcall _MODULE_1W_SAMPLE
 		clr TEMP
 		bld TEMP, 0
-		or DATA, TEMP
+		and DATA, TEMP
 		dec ADDR
 	brne _MODULE_1W_SEND_R_loop
 	com DATA
