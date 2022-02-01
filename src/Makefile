@@ -1,5 +1,5 @@
-PROGRAMMER=apu2
-AVRDUDE=sudo avrdude1 -c ${PROGRAMMER} -p m324pa
+PROG?=apu2
+AVRDUDE=sudo avrdude1 -c ${PROG} -p m324pa
 F_OSC=16000000
 
 flash: build/main.hex
