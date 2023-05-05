@@ -1,5 +1,4 @@
 PROG?=apu2
-MEGA?=324pa
 AVRDUDE=sudo avrdude1 -c ${PROG} -p m${MEGA}
 F_OSC=16000000
 
@@ -8,11 +7,11 @@ GOOD_MEGA := 0
 CFLAGS += --max_errors 1
 
 ifeq "${MEGA}" "164p"
-  CFLAGS += -DM164=1
+  CFLAGS += -D M164=1
   GOOD_MEGA := 1
 endif
 ifeq "${MEGA}" "324pa"
-  CFLAGS += -DM324=1
+  CFLAGS += -D M324=1
   GOOD_MEGA := 1
 endif
 ifeq "${GOOD_MEGA}" "0"
@@ -24,7 +23,7 @@ ifeq "${GOOD_MEGA}" "0"
 endif
 
 
-flash: build/main.hex
+flash: build/main_${MEGA}.hex
 	${AVRDUDE} -U flash:w:$<:i
 
 fuse:
@@ -34,6 +33,9 @@ build/main.hex: build/main.asm *.asm *.inc Makefile | build/.
 	cd build; avra ${CFLAGS} -o ../$@ -I ../ main.asm
 # 	cd build; avra -fI -D F_OSC=${F_OSC} -I ../ -o $@ main.asm
 
+build/main_${MEGA}.hex: build/main.hex | build/main.asm
+	rm build/main.asm
+	cp $< $@
 
 build/main.asm: main.asm | build/.
 	cp $< $@
