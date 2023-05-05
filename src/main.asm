@@ -1,4 +1,11 @@
+.ifdef M164
+.include "m164_custom.inc"
+.endif
+
+.ifdef M324
 .include "m324_custom.inc"
+.endif
+
 .include "registers.asm"
 .include "ram.asm"
 
